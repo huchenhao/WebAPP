@@ -21,7 +21,7 @@ async def create_pool(loop, **kw):
         user=kw['user'],
         password=kw['password'],
         db=kw['db'],
-        charset=kw.get('charset', 'utf-8'),
+        charset=kw.get('charset', 'utf8'),
         autocommit=kw.get('autocommit', True),
         maxsize=kw.get('maxsize', 10),
         minsize=kw.get('minsize', 1),
@@ -49,7 +49,7 @@ async def execute(sql, args):
     with (await __pool) as conn:
         try:
             cur = await conn.cursor()
-            await cur.excute(sql.replace('?', '%s'), args)
+            await cur.execute(sql.replace('?', '%s'), args)
             affected = cur.rowcount
             await cur.close()
         except BaseException as e:
